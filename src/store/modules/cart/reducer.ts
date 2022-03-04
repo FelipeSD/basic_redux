@@ -1,7 +1,14 @@
-// ponto central de um módulo (estado)
+// reducer: ponto central de um módulo (estado)
 
-function cart(){
-    return []
+import { Reducer } from "redux";
+import { ICartState } from "./types";
+
+const INITIAL_STATE: ICartState = {
+    items: []
+}
+
+const cart: Reducer<ICartState> = () => {
+    return INITIAL_STATE
 }
 
 export default cart;
