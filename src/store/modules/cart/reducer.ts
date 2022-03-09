@@ -1,5 +1,5 @@
 // reducer: ponto central de um módulo (estado)
-
+import produce from 'immer';
 import { Reducer } from "redux";
 import { ICartState } from "./types";
 
@@ -8,17 +8,21 @@ const INITIAL_STATE: ICartState = {
 }
 
 const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
-    switch (action.type){
-        case 'ADD_PRODUCT_TO_CART': {
-            const {product} = action.payload;
-            state.items.push({...product, quantity: 1});
-            return {...state};
+    return produce(state, draft => {
+        switch (action.type){
+            case 'ADD_PRODUCT_TO_CART': {
+                const {product} = action.payload;
+                draft.items.push({
+                    product,
+                    quantity: 1
+                });
+                break;
+            }
+            default: {
+                return draft;
+            }
         }
-        default: {
-            return state;
-        }
-
-    }
+    });
 }
 
 export default cart;
